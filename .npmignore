@@ -1,0 +1,15 @@
+
+.eslintignore
+.eslintrc
+.gitignore
+tsconfig.json
+pnpm-lock.yaml
+
+node_modules/
+examples/
+src/
+
+demo.gif
+README.md
+README.zh-CN.md
+LICENSE

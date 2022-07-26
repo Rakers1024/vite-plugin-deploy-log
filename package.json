@@ -1,0 +1,41 @@
+{
+  "name": "vite-plugin-deploy-log",
+  "version": "0.0.1",
+  "description": "A deploy log plugin for Vite.",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "pnpm run build -- --watch --ignore-watch examples",
+    "build": "tsup src/index.ts --dts --format cjs,esm",
+    "prepublishOnly": "pnpm run build",
+    "release": "npx bumpp --push --tag --commit && pnpm publish",
+    "example:react": "cd examples/vite-react && pnpm run build",
+    "example:vue2": "cd examples/vite-vue2 && pnpm run build",
+    "example:vue3": "cd examples/vite-vue3 && pnpm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rakers1024/vite-plugin-deploy-log.git"
+  },
+  "keywords": [
+    "vite",
+    "plugin"
+  ],
+  "author": "Rakers1024",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rakers1024/vite-plugin-deploy-log/issues"
+  },
+  "homepage": "https://github.com/Rakers1024/vite-plugin-deploy-log#readme",
+  "peerDependencies": {
+    "vite": ">2.0.0-0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "@types/node": "^18.6.1",
+    "eslint": "^8.20.0",
+    "tsup": "^6.2.0",
+    "typescript": "^4.7.4",
+    "vite": "*"
+  }
+}
