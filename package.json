@@ -8,8 +8,8 @@
     "build": "tsup src/*.ts* --dts --format cjs,esm",
     "prepublishOnly": "pnpm run build",
     "release": "npx bumpp --push --tag --commit && pnpm publish",
-    "example:react": "cd examples/vite-react && pnpm run build",
-    "example:vue2": "cd examples/vite-vue2 && pnpm run build",
+    "example:react": "cd examples/vite-react && pnpm run build && pnpm run preview",
+    "example:vue2": "cd examples/vite-vue2 && pnpm run build && pnpm run preview",
     "example:vue3": "cd examples/vite-vue3 && pnpm run build && pnpm run preview"
   },
   "repository": {

@@ -1,7 +1,8 @@
 import { defineConfig } from "vite";
-import { createVuePlugin } from "vite-plugin-vue2";
+import react from "@vitejs/plugin-react";
 import createDeployLogPlugin from "vite-plugin-deploy-log";
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [createVuePlugin(), createDeployLogPlugin()],
+  plugins: [react(), createDeployLogPlugin()],
 });

@@ -11,7 +11,7 @@
     "vite-plugin-vue2": "^1.9.3",
     "vue": "^2.6.14",
     "vite": "link:../../node_modules/vite",
-    "vite-plugin-progress": "link:../../",
+    "vite-plugin-deploy-log": "link:../../",
     "vue-template-compiler": "^2.6.14"
   }
 }
