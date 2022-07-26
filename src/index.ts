@@ -1,9 +1,3 @@
-/**
- * @Author: Rakers1024
- * @Date: 2022/07/26 09:19
- * @Description:
- */
-
 import type { PluginOption } from "vite";
 import fs from "fs";
 import child_process from "child_process";
@@ -22,48 +16,49 @@ function getCurrentTime(): string {
   return `${date.getFullYear()}/${month}/${day} ${hour}:${minute}:${second}`;
 }
 
-type DeployLogData = {
+export type DeployLogData = {
   deployTime: string;
   gitMsgs: string[];
+  log: string;
 };
 
-export default function createDeployLogPlugin(): PluginOption {
+/**
+ * 创建部署日志插件
+ * @returns {PluginOption[]}
+ */
+export default function createDeployLogPlugin(): PluginOption[] {
   let outDir: string;
   const outData: DeployLogData = {} as DeployLogData;
   const gitMsgCount = 10;
-  return {
-    name: "vite-plugin-deploy-log",
+  return [
+    {
+      name: "vite-plugin-deploy-log",
 
-    enforce: "pre",
+      enforce: "pre",
 
-    apply: "build",
+      apply: "build",
 
-    config(config, { command }) {
-      if (command === "build") {
-        outDir = config.build?.outDir || "dist";
-      }
-    },
-
-    // transform(code, id) {},
-
-    renderChunk() {
-      return null;
-    },
-
-    closeBundle() {
-      outData.deployTime = getCurrentTime();
-      const exec = child_process.exec;
-      exec(`git log --oneline -${gitMsgCount * 2}`, (err, stdout, stderr) => {
-        if (err) {
-          console.error(err);
-          return;
+      config(config, { command }) {
+        if (command === "build") {
+          outDir = config.build?.outDir || "dist";
         }
-        outData.gitMsgs = stdout.split("\n").filter(msg => msg != "" && msg.indexOf("Merge branch") == -1);
-        if (outData.gitMsgs.length > gitMsgCount) outData.gitMsgs.length = gitMsgCount;
-        outData.gitMsgs = outData.gitMsgs.map(msg => msg.replace(/^.*? /g, ""));
+      },
 
-        fs.writeFileSync(`${outDir}/deploy-log.json`, JSON.stringify(outData));
-      });
+      closeBundle() {
+        outData.deployTime = getCurrentTime();
+        const exec = child_process.exec;
+        exec(`git log --oneline -${gitMsgCount * 2}`, (err, stdout) => {
+          if (err) {
+            new Error("Error: " + err);
+            return;
+          }
+          outData.gitMsgs = stdout.split("\n").filter(msg => msg != "" && msg.indexOf("Merge branch") == -1);
+          if (outData.gitMsgs.length > gitMsgCount) outData.gitMsgs.length = gitMsgCount;
+          outData.gitMsgs = outData.gitMsgs.map(msg => msg.replace(/^.*? /g, ""));
+
+          fs.writeFileSync(`${outDir}/deploy-log.json`, JSON.stringify(outData));
+        });
+      },
     },
-  };
+  ];
 }
