@@ -58,7 +58,10 @@ export default function createDeployLogPlugin(): PluginOption {
           console.error(err);
           return;
         }
-        outData.gitMsgs = stdout.split("\n");
+        outData.gitMsgs = stdout.split("\n").filter(msg => msg != "" && msg.indexOf("Merge branch") == -1);
+        if (outData.gitMsgs.length > gitMsgCount) outData.gitMsgs.length = gitMsgCount;
+        outData.gitMsgs = outData.gitMsgs.map(msg => msg.replace(/^.*? /g, ""));
+
         fs.writeFileSync(`${outDir}/deploy-log.json`, JSON.stringify(outData));
       });
     },
