@@ -45,8 +45,17 @@ export default function showDeployLog(): void {
           </ul>
         </div>
       </div>
+      <style>
+      #deploy-log{
+          position:absolute;
+          left:0;
+          bottom: 0;
+          z-index:5;
+      }
+      </style>
     `;
     //@ts-ignore
     document.body.appendChild(deployLog);
+    console.log(deployLog.text);
   });
 }
