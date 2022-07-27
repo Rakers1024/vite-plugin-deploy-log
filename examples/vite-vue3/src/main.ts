@@ -13,4 +13,4 @@ app.use(router);
 app.mount("#app");
 
 import { showDeployLog } from "vite-plugin-deploy-log";
-showDeployLog();
+import.meta.env.MODE == "production" && showDeployLog();

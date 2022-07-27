@@ -7,4 +7,4 @@ new Vue({
 }).$mount();
 
 import { showDeployLog } from "vite-plugin-deploy-log";
-showDeployLog();
+import.meta.env.MODE == "production" && showDeployLog();
