@@ -52,7 +52,17 @@ export default function createDeployLogPlugin(): PluginOption[] {
             new Error("Error: " + err);
             return;
           }
-          outData.gitMsgs = stdout.split("\n").filter(msg => msg != "" && msg.indexOf("Merge branch") == -1);
+          outData.gitMsgs = stdout
+            .split("\n")
+            .filter(
+              msg =>
+                msg != "" &&
+                msg.indexOf("Merge branch") == -1 &&
+                msg.indexOf("Merge pull request") == -1 &&
+                msg.indexOf("Merge remote-tracking branch") == -1 &&
+                msg.indexOf("Merge remote branch") == -1
+            );
+
           if (outData.gitMsgs.length > gitMsgCount) outData.gitMsgs.length = gitMsgCount;
           outData.gitMsgs = outData.gitMsgs.map(msg => msg.replace(/^.*? /g, ""));
 
