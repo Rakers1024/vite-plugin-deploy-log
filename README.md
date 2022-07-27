@@ -48,4 +48,4 @@ getDeployLogData().then(res=>console.log(res));
 ```
 
 ## 效果演示
-![]([./2022-07-27-11-04-05.png](https://raw.githubusercontent.com/Rakers1024/vite-plugin-deploy-log/main/gif.gif))
+![](https://github.com/Rakers1024/vite-plugin-deploy-log/raw/main/gif.gif)
