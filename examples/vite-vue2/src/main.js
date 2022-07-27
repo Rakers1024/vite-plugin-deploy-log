@@ -6,5 +6,5 @@ new Vue({
   render: h => h(App),
 }).$mount();
 
-import showDeployLog from "vite-plugin-deploy-log/dist/data";
+import { showDeployLog } from "vite-plugin-deploy-log";
 showDeployLog();

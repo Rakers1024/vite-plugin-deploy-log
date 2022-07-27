@@ -10,5 +10,5 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-import showDeployLog from "vite-plugin-deploy-log/dist/data";
+import { showDeployLog } from "vite-plugin-deploy-log";
 showDeployLog();
