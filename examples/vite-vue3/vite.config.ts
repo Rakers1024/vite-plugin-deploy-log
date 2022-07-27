@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import createDeployLogPlugin from "vite-plugin-deploy-log";
+import { createDeployLogPlugin } from "vite-plugin-deploy-log";
 import * as path from "path";
 
 // https://vitejs.dev/config/

@@ -12,6 +12,5 @@ app.use(router);
 // 挂载实例
 app.mount("#app");
 
-
-import showDeployLog from "vite-plugin-deploy-log/dist/data";
+import { showDeployLog } from "vite-plugin-deploy-log";
 showDeployLog();
