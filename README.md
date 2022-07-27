@@ -18,9 +18,11 @@ export default defineConfig({
 })
 
 //main.js
-import { showDeployLog } from "vite-plugin-deploy-log";
-//测试环境下显示
-import.meta.env.MODE == 'staging' && showDeployLog();
+if (import.meta.env.MODE == "staging") { //仅测试环境下显示
+  import("vite-plugin-deploy-log").then(({ showDeployLog }) => {
+    showDeployLog();
+  });
+}
 
 
 ```

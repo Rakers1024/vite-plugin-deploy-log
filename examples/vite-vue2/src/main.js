@@ -6,5 +6,8 @@ new Vue({
   render: h => h(App),
 }).$mount();
 
-import { showDeployLog } from "vite-plugin-deploy-log";
-import.meta.env.MODE == "production" && showDeployLog();
+if (import.meta.env.MODE == "production") {
+  import("vite-plugin-deploy-log").then(({ showDeployLog }) => {
+    showDeployLog();
+  });
+}
