@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-deploy-log",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A deploy log plugin for Vite.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
