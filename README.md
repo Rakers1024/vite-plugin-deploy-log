@@ -47,6 +47,13 @@ interface DeployLogPlugin {
 import { getDeployLogData } from "vite-plugin-deploy-log";
 getDeployLogData().then(res=>console.log(res));
 
+//修改显示配置
+showDeployLog({
+  base: '/admin/',
+  path: 'deploy.log',
+  zIndex: 10000
+});
+
 ```
 
 ## 效果演示

@@ -119,13 +119,34 @@ export function getDeployLogData(base?: string, path?: string): Promise<DeployLo
   });
 }
 
+interface ShowDeployLogOptions {
+  /**
+   * 基础路径
+   * @default "/"
+   */
+  base?: string;
+
+  /**
+   * 请求的路径
+   * @default "deploy.log"
+   */
+  path?: string;
+
+  /**
+   * 显示的z-index等级
+   * @default 9999
+   */
+  zIndex?: number;
+}
+
 /**
  * 在main.js插入dom元素,来显示日志
  * @param base 基础路径
  * @param path 数据文件地址
  */
-export function showDeployLog(base?: string, path?: string): void {
-  getDeployLogData(base, path).then((outData: DeployLogData) => {
+export function showDeployLog(options?: ShowDeployLogOptions): void {
+  const zIndex = options?.zIndex || 9999;
+  getDeployLogData(options?.base, options?.path).then((outData: DeployLogData) => {
     //@ts-ignore
     const deployLog = document.createElement("div");
     deployLog.id = "deploy-log";
@@ -154,7 +175,7 @@ export function showDeployLog(base?: string, path?: string): void {
         </div>
       </div>
       <style>
-      #deploy-log {width: 300px;background: teal;position: fixed;bottom: 0;left: 0;opacity: 0.9;}
+      #deploy-log {width: 300px;background: teal;position: fixed;bottom: 0;left: 0;opacity: 0.9;z-index: ${zIndex};}
       #deploy-log_content { border-top: 1px dashed #fff;padding: 10px;}
       #deploy-log h4 {margin: 0;padding: 14px;color: #fff;}
       #deploy-log p {margin: 0 0 .5em;color: #fff;}
