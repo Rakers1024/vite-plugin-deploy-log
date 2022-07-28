@@ -27,7 +27,7 @@ if (import.meta.env.MODE == "staging") { //仅测试环境下显示
 
 ```
 
-## 附件功能
+## 附加功能
 ```javascript
 //插件可选参数
 interface DeployLogPlugin {
