@@ -179,6 +179,9 @@ export function showDeployLog(options?: ShowDeployLogOptions): void {
       #deploy-log_content { border-top: 1px dashed #fff;padding: 10px;}
       #deploy-log h4 {margin: 0;padding: 14px;color: #fff;}
       #deploy-log p {margin: 0 0 .5em;color: #fff;}
+      #deploy-log ul {max-height: 50vh;overflow-y: auto;}
+      #deploy-log ul::-webkit-scrollbar{width: 6px;height: 6px;}
+      #deploy-log ul::-webkit-scrollbar-thumb{border-radius:3px;background-color: #ccc;}
       #deploy-log li {margin: 0 0 .5em;color: #fff;}
       #deploy-log .icon {text-decoration:none;display:block ;height: 20px;width: 20px;border-radius: 20px;border: 2px solid #fff;text-align: center;line-height: 1.23em;position: absolute;right: 12px;top: 12px; color:#fff}
       #deploy-log .icon.minus:after {content: "-";c}

@@ -10,7 +10,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
-  plugins: [vue(), createDeployLogPlugin()],
+  plugins: [
+    vue(),
+    createDeployLogPlugin({
+      gitMsgCount: 20,
+    }),
+  ],
   server: {
     port: 8080,
     hmr: {
