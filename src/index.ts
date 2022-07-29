@@ -5,8 +5,7 @@ import child_process from "child_process";
 /**
  * 获取当前时间 格式：yyyy/MM/dd HH:MM:SS
  */
-function getCurrentTime(): string {
-  const date = new Date(); //当前时间
+function formatTime(date = new Date()): string {
   const zeroFill = i => (i >= 0 && i <= 9 ? "0" + i : i);
   const month = zeroFill(date.getMonth() + 1); //月
   const day = zeroFill(date.getDate()); //日
@@ -18,7 +17,10 @@ function getCurrentTime(): string {
 
 export interface DeployLogData {
   deployTime: string;
-  gitMsgs: string[];
+  gitMsgs: {
+    msg: string;
+    date: string;
+  }[];
 }
 export interface DeployLogPlugin {
   /**
@@ -59,26 +61,22 @@ export function createDeployLogPlugin(options?: DeployLogPlugin): PluginOption[]
       },
 
       closeBundle() {
-        outData.deployTime = getCurrentTime();
+        outData.deployTime = formatTime();
         const exec = child_process.exec;
-        exec(`git log --oneline -${gitMsgCount * 2}`, (err, stdout) => {
+        exec(`git log -${gitMsgCount * 2} --no-merges --pretty='%ad##**##%s'`, (err, stdout) => {
           if (err) {
             new Error("Error: " + err);
             return;
           }
-          outData.gitMsgs = stdout
-            .split("\n")
-            .filter(
-              msg =>
-                msg != "" &&
-                msg.indexOf("Merge branch") == -1 &&
-                msg.indexOf("Merge pull request") == -1 &&
-                msg.indexOf("Merge remote-tracking branch") == -1 &&
-                msg.indexOf("Merge remote branch") == -1
-            );
+          outData.gitMsgs = stdout.split("\n").map(line => {
+            const [date, msg] = line.split("##**##");
+            return {
+              msg,
+              date: formatTime(new Date(date)),
+            };
+          });
 
           if (outData.gitMsgs.length > gitMsgCount) outData.gitMsgs.length = gitMsgCount;
-          outData.gitMsgs = outData.gitMsgs.map(msg => msg.replace(/^.*? /g, ""));
 
           fs.writeFileSync(`${outDir}/${outputPath}`, JSON.stringify(outData));
         });
@@ -170,7 +168,7 @@ export function showDeployLog(options?: ShowDeployLogOptions): void {
           <p>部署时间: ${outData.deployTime}</p>
           <p>Git提交信息:</p>
           <ul>
-            ${outData.gitMsgs.map(msg => `<li>${msg}</li>`).join("")}
+            ${outData.gitMsgs.map(msg => `<li>${msg.msg}--${msg.date}</li>`).join("")}
           </ul>
         </div>
       </div>
