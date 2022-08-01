@@ -63,7 +63,7 @@ export function createDeployLogPlugin(options?: DeployLogPlugin): PluginOption[]
       closeBundle() {
         outData.deployTime = formatTime();
         const exec = child_process.exec;
-        exec(`git log -${gitMsgCount * 2} --no-merges --pretty='%ad##**##%s'`, (err, stdout) => {
+        exec(`git log -${gitMsgCount} --no-merges --pretty=%ad##**##%s`, (err, stdout) => {
           if (err) {
             new Error("Error: " + err);
             return;
@@ -75,6 +75,7 @@ export function createDeployLogPlugin(options?: DeployLogPlugin): PluginOption[]
               date: formatTime(new Date(date)),
             };
           });
+          outData.gitMsgs = outData.gitMsgs.filter(item => !!item.msg);
 
           if (outData.gitMsgs.length > gitMsgCount) outData.gitMsgs.length = gitMsgCount;
 
@@ -168,7 +169,7 @@ export function showDeployLog(options?: ShowDeployLogOptions): void {
           <p>部署时间: ${outData.deployTime}</p>
           <p>Git提交信息:</p>
           <ul>
-            ${outData.gitMsgs.map(msg => `<li>${msg.msg}--${msg.date}</li>`).join("")}
+            ${outData.gitMsgs.map(msg => `<li>${msg.msg}</li>`).join("")}
           </ul>
         </div>
       </div>
